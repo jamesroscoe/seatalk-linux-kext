@@ -1,7 +1,7 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/sysfs.h>
-#include "../seeatalk/seatalk_hardware_layer.h"
+#include "../seatalk/seatalk_hardware_layer.h"
 #include "../seatalk-instruments/boat_status.h"
 #include "../seatalk-instruments/boat_sensor.h"
 #include "../seatalk/seatalk_datagram.h"
