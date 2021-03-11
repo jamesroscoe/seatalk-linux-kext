@@ -4,7 +4,7 @@
   #include <linux/time.h>
   #include <linux/module.h>
 #endif
-#include "timeout.h"
+#include "../seatalk-instruments/timeout.h"
 
 timeout get_time(void) {
   #ifdef TESTING

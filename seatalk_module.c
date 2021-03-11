@@ -1,10 +1,10 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/sysfs.h>
+#include "../seatalk/seatalk_protocol.h"
 #include "../seatalk/seatalk_hardware_layer.h"
 #include "../seatalk-instruments/boat_status.h"
 #include "../seatalk-instruments/boat_sensor.h"
-#include "../seatalk/seatalk_datagram.h"
 #include "../seatalk-instruments/seatalk_command.h"
 
 // utility
@@ -615,21 +615,21 @@ static int __init init_seatalk_module(void) {
     pr_info("Unable to initialize sysfs. Exiting.");
     goto cleanup;
   }
-  if (init_seatalk_hardware_signal()) {
+  if (st_initialize()) {
     pr_info("Unable to initialize SeaTalk communications layer. Exiting.");
     goto cleanup;
   }
-  if (init_seatalk_hardware_irq()) {
-    pr_info("Unable to initialize Seatalk IRQ. Exiting");
-    goto cleanup_irq;
-  }
+//  if (init_seatalk_hardware_irq()) {
+//    pr_info("Unable to initialize Seatalk IRQ. Exiting");
+//    goto cleanup_irq;
+//  }
   initialize_status();
   initialize_sensors();
   pr_info("Seatalk module initialization complete.");
   return 0;
 
-cleanup_irq:
-  exit_seatalk_hardware_signal();
+//cleanup_irq:
+//  exit_seatalk_hardware_signal();
 
 cleanup:
   return -1;
@@ -637,8 +637,8 @@ cleanup:
 
 void __exit exit_seatalk_module(void) {
   pr_info("Exiting Seatalk module");
-  exit_seatalk_hardware_irq();
-  exit_seatalk_hardware_signal();
+  st_exit();
+//  exit_seatalk_hardware_signal();
   exit_sysfs();
   pr_info("Seatalk module cleanup complete.");
 }
